@@ -1,14 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
+import Main from './src/Screen/Main'
 
 const Root = () => {
     return (
-        <View>
-            <Text>hi asdfasdfsdafasdfsadfasdf</Text>
-        </View>
+        <>
+        <Main />
+        </>
     )
 }
 
 export default Root
-
-const styles = StyleSheet.create({})
