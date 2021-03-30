@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, StatusBar } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"; 
+
+import Biometric from '../Components/Biometric'
 
 const { width, height } = Dimensions.get("window");
 
@@ -37,11 +39,16 @@ const styles = StyleSheet.create({
 const Main = () => {
     console.log(width, height)
     return (
+        <>
+        <StatusBar barStyle="dark-content" />
         <View style={styles.flexWhite}>
             <Text style={styles.flexText}>3WDJ 지문인식</Text>
-            <View style={styles.flexRed}></View>
+            <View style={styles.flexRed}>
+                <Biometric />
+            </View>
             <View style={styles.flexBlue}></View>
         </View>
+        </>
     )
 }
 
