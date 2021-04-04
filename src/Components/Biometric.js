@@ -3,16 +3,7 @@ import { StyleSheet, Text, View, Image, Button } from 'react-native'
 import ReactNativeBiometrics from 'react-native-biometrics'
 import deny from '../assets/deny.png'
 
-const styles = StyleSheet.create({
-    textTitle: {
-        display: 'flex',
-        alignSelf: 'center',
-        fontSize: 20,
-        margin: 10,
-    },
-})
-
-const Biometric = () => {
+const Biometric = (props) => {
     const [isReady, setIsReady] = useState(false)
     const [test, setTest] = useState('none')
 
@@ -97,17 +88,20 @@ const Biometric = () => {
             }
         })
     }
+
+    const fix = () => {
+        props.setBool(false)
+    }
     
     return (
         <View>
             <Text style={styles.textTitle}> Biometrics </Text>
             {isReady
             ? <>
-            <Text>true</Text>
-            <Text>{test}</Text>
             <Button title='Make Key' onPress={makeKey}/>
             <Button title='Delete Key' onPress={deleteKey}/>
             <Button title='bio' onPress={prompt}/>
+            <Button title='To Login' onPress={fix}/>
             </>
             : <>
             <Image source={deny}></Image>
@@ -119,3 +113,12 @@ const Biometric = () => {
 
 export default Biometric
 
+
+const styles = StyleSheet.create({
+    textTitle: {
+        display: 'flex',
+        alignSelf: 'center',
+        fontSize: 20,
+        margin: 10,
+    },
+})
