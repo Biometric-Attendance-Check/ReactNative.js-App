@@ -39,49 +39,34 @@ const Biometric = () => {
         })
         
 
-        // ReactNativeBiometrics.createKeys('Confirm fingerprint').then((resultObject) => {
-        //     const {publicKey} = resultObject
-        //     console.log(publicKey)
-        // })
-
-
         ReactNativeBiometrics.biometricKeysExist().then((resultObject) => {
             const { keysExist } = resultObject
             if (keysExist) {
                 console.log('Keys Exist')
             } else {
                 console.log('Keys do not exist or were deleted')
-            }
+            } 
         })
-
-
-        // ReactNativeBiometrics.deleteKeys().then((resultObject) => {
-        //     const { keysDeleted } = resultObject
-        //     if (keysDeleted) {
-        //         console.log('Successful deletion')
-        //     } else {
-        //         console.log('Unsuccessful deletion because there were no keys to delete')
-        //     }
-        // })
-
-
+        
+    }, [])
+    
+    
+    const prompt = () => {
         let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
         let payload = epochTimeSeconds + 'some message'
-
         ReactNativeBiometrics.createSignature({
             promptMessage: 'Sign in',
             payload: payload
         }).then((resultObject) => {
-            const { success, signature } = resultObject
-            console.log(success, signature)
+            const { success, signature, error } = resultObject
             if (success) {
                 console.log(signature)
-                // verifySignatureWithServer(signature, payload)
-            } 
+                verifySignatureWithServer(signature, payload)
+            } else {
+                console.log(error)
+            }
         })
-
-
-        // ReactNativeBiometrics.simplePrompt({promptMessage: 'Confirm fingerprint'}).then((resultObject) => {
+        // ReactNativeBiometrics.simplePrompt({promptMessage: 'Confirm faceID'}).then((resultObject) => {
         //     const { success } = resultObject
         //     if (success) {
         //         console.log('successful biometrics provided')
@@ -91,8 +76,8 @@ const Biometric = () => {
         // }).catch(() => {
         //     console.log('biometrics failed')
         // })
-
-    }, [])
+        
+    }
 
 
     const makeKey = () => {
@@ -122,6 +107,7 @@ const Biometric = () => {
             <Text>{test}</Text>
             <Button title='Make Key' onPress={makeKey}/>
             <Button title='Delete Key' onPress={deleteKey}/>
+            <Button title='bio' onPress={prompt}/>
             </>
             : <>
             <Image source={deny}></Image>
