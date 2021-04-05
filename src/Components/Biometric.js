@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native'
 
 const InOut = (props) => {
 
@@ -23,32 +23,16 @@ const InOut = (props) => {
         },
     })
 
-    // ReactNativeBiometrics.biometricKeysExist().then((resultObject) => {
-    //     const { keysExist } = resultObject
-    //     if (keysExist) {
-    //         console.log('Keys Exist')
-    //     } else {
-    //         console.log('Keys do not exist or were deleted')
-    //     } 
-    // })
-
-    // const makeKey = () => {
-    //     ReactNativeBiometrics.createKeys('Confirm fingerprint').then((resultObject) => {
-    //         const {publicKey} = resultObject
-    //         console.log(publicKey)
-    //     })
-    // }
-
-    // const deleteKey = () => {
-    //     ReactNativeBiometrics.deleteKeys().then((resultObject) => {
-    //         const { keysDeleted } = resultObject
-    //         if (keysDeleted) {
-    //             console.log('Successful deletion')
-    //         } else {
-    //             console.log('Unsuccessful deletion because there were no keys to delete')
-    //         }
-    //     })
-    // }
+    const deleteKey = () => {
+        ReactNativeBiometrics.deleteKeys().then((resultObject) => {
+            const { keysDeleted } = resultObject
+            if (keysDeleted) {
+                console.log('Successful deletion')
+            } else {
+                console.log('Unsuccessful deletion because there were no keys to delete')
+            }
+        })
+    }
 
     const prompt = () => {
         let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
@@ -58,14 +42,11 @@ const InOut = (props) => {
             payload: payload
         }).then((resultObject) => {
             const { success, signature, error } = resultObject
-            if (success) {
-                // console.log(signature)
-                verifySignatureWithServer(signature, payload)
-                props.setTempText(successed)
-            } else {
-                // console.log(error)
-                props.setTempText(failed)
-            }
+
+            // 지문인식 완료 후 서버에서 데이터 불러오기
+
+            Alert.alert(JSON.stringify(success))
+            props.setTempText(JSON.stringify(success))
         })
     }
 
