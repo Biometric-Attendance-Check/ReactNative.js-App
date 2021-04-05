@@ -23,16 +23,7 @@ const InOut = (props) => {
         },
     })
 
-    const deleteKey = () => {
-        ReactNativeBiometrics.deleteKeys().then((resultObject) => {
-            const { keysDeleted } = resultObject
-            if (keysDeleted) {
-                console.log('Successful deletion')
-            } else {
-                console.log('Unsuccessful deletion because there were no keys to delete')
-            }
-        })
-    }
+    
 
     const prompt = () => {
         let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
@@ -46,7 +37,7 @@ const InOut = (props) => {
             // 지문인식 완료 후 서버에서 데이터 불러오기
 
             Alert.alert(JSON.stringify(success))
-            props.setTempText(JSON.stringify(success))
+            props.setTempText(JSON.stringify(signature))
         })
     }
 

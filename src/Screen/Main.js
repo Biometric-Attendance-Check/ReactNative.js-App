@@ -11,7 +11,17 @@ const { width, height } = Dimensions.get("window");
 const Main = (props) => {
     const [isReady, setIsReady] = useState(false)
     const [tempText, setTempText] = useState('none')
-    const [text, setText] = useState()
+
+    // const deleteKey = () => {
+    //     ReactNativeBiometrics.deleteKeys().then((resultObject) => {
+    //         const { keysDeleted } = resultObject
+    //         if (keysDeleted) {
+    //             console.log('Successful deletion')
+    //         } else {
+    //             console.log('Unsuccessful deletion because there were no keys to delete')
+    //         }
+    //     })
+    // }
 
     useEffect(() => {
         // 휴대폰 가로 세로 길이
@@ -51,9 +61,6 @@ const Main = (props) => {
         })
     }, [])
 
-    useEffect(() => {
-        setText(tempText)
-    },[tempText])
 
     return (
         <View style={styles.flexWhite}>
@@ -62,7 +69,7 @@ const Main = (props) => {
             ? <>
             <View style={styles.flexRed}>
                 {/* 출결 현황 */}
-                <Text style={styles.textContents}>{text}</Text>
+                <Text style={styles.textContents}>{tempText}</Text>
             </View>
             <View style={styles.flexBlue}>
                 <Biometric width={width} text='입 실' setTempText={setTempText}
