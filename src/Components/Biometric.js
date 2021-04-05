@@ -59,10 +59,12 @@ const InOut = (props) => {
         }).then((resultObject) => {
             const { success, signature, error } = resultObject
             if (success) {
-                console.log(signature)
+                // console.log(signature)
                 verifySignatureWithServer(signature, payload)
+                props.setTempText(successed)
             } else {
-                console.log(error)
+                // console.log(error)
+                props.setTempText(failed)
             }
         })
     }

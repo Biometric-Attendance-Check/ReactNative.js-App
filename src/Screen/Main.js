@@ -10,6 +10,8 @@ const { width, height } = Dimensions.get("window");
 
 const Main = (props) => {
     const [isReady, setIsReady] = useState(false)
+    const [tempText, setTempText] = useState('none')
+    const [text, setText] = useState()
 
     useEffect(() => {
         // 휴대폰 가로 세로 길이
@@ -35,7 +37,23 @@ const Main = (props) => {
                 setIsReady(false)
             }
         })
+
+        ReactNativeBiometrics.biometricKeysExist().then((resultObject) => {
+            const { keysExist } = resultObject
+            if (keysExist) {
+                console.log('Keys Exist')
+            } else {
+                ReactNativeBiometrics.createKeys('Confirm fingerprint').then((resultObject) => {
+                    const {publicKey} = resultObject
+                    console.log(publicKey)
+                })
+            } 
+        })
     }, [])
+
+    useEffect(() => {
+        setText(tempText)
+    },[tempText])
 
     return (
         <View style={styles.flexWhite}>
@@ -44,11 +62,13 @@ const Main = (props) => {
             ? <>
             <View style={styles.flexRed}>
                 {/* 출결 현황 */}
-                
+                <Text style={styles.textContents}>{text}</Text>
             </View>
             <View style={styles.flexBlue}>
-                <Biometric width={width} text='입 실' ReactNativeBiometrics={ReactNativeBiometrics}/>
-                <Biometric width={width} text='퇴 실' ReactNativeBiometrics={ReactNativeBiometrics}/>
+                <Biometric width={width} text='입 실' setTempText={setTempText}
+                    ReactNativeBiometrics={ReactNativeBiometrics}/>
+                <Biometric width={width} text='퇴 실' setTempText={setTempText}
+                    ReactNativeBiometrics={ReactNativeBiometrics}/>
             </View>
             </>
             : <ErrorScreen width={width}/>}
@@ -97,4 +117,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         margin: 10,
     },
+    textContents: {
+        margin: 20,
+        fontSize: 22,
+    }
 });
