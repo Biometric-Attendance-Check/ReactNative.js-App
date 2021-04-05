@@ -1,23 +1,58 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, View, Text, Dimensions } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"; 
+import ReactNativeBiometrics from 'react-native-biometrics'
 
 import Biometric from '../Components/Biometric'
+import ErrorScreen from '../Components/ErrorScreen'
 
 const { width, height } = Dimensions.get("window");
 
 const Main = (props) => {
-    console.log(width, height)
+    const [isReady, setIsReady] = useState(false)
+
+    useEffect(() => {
+        // 휴대폰 가로 세로 길이
+        console.log(width, height)
+
+        // 생체인식 기능 활성화 체크
+        ReactNativeBiometrics.isSensorAvailable().then((resultObject) => {
+            // available : 가능하면 true, 불가능하면 false
+            // biometryType : TouchID or FaceID or Biometircs or undefined
+            const { available, biometryType } = resultObject
+
+            if (available && biometryType === ReactNativeBiometrics.TouchID) {
+                console.log('TouchID is supported')
+                setIsReady(true)
+            } else if (available && biometryType === ReactNativeBiometrics.FaceID) {
+                console.log('FaceID is supported')
+                setIsReady(true)
+            } else if (available && biometryType === ReactNativeBiometrics.Biometrics) {
+                console.log('Biometrics is supported')
+                setIsReady(true)
+            } else {
+                console.log('Biometrics not supported')
+                setIsReady(false)
+            }
+        })
+    }, [])
+
     return (
         <View style={styles.flexWhite}>
             <Text style={styles.flexText}>3WDJ 지문인식</Text>
+            {isReady
+            ? <>
             <View style={styles.flexRed}>
-                <Biometric setBool={props.setBool}/>
+                {/* 출결 현황 */}
+                
             </View>
             <View style={styles.flexBlue}>
-                <View style={styles.flexGrey}><Text>입실</Text></View>
-                <View style={styles.flexGrey}><Text>퇴실</Text></View>
+                <Biometric width={width} text='입 실' ReactNativeBiometrics={ReactNativeBiometrics}/>
+                <Biometric width={width} text='퇴 실' ReactNativeBiometrics={ReactNativeBiometrics}/>
             </View>
+            </>
+            : <ErrorScreen width={width}/>}
+            
         </View>
     )
 }
@@ -56,11 +91,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
     },
-    flexGrey: {
+    textTitle: {
         display: 'flex',
-        flex: 1,
-        margin: width*0.03,
-        borderRadius: 10,
-        backgroundColor: 'rgb(246,247,252)',
+        alignSelf: 'center',
+        fontSize: 20,
+        margin: 10,
     },
 });
