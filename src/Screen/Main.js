@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, Image } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"; 
 import ReactNativeBiometrics from 'react-native-biometrics'
 
 import Biometric from '../Components/Biometric'
 import ErrorScreen from '../Components/ErrorScreen'
+import YJ from '../assets/yeungjin.png'
 
 const { width, height } = Dimensions.get("window");
 
@@ -68,16 +69,17 @@ const Main = (props) => {
 
     return (
         <View style={styles.flexWhite}>
-            <Text style={styles.flexText}>3WDJ 지문인식</Text>
+            <Text style={styles.Title}>3WDJ 지문인식</Text>
             {isReady
             ? <>
-            <View style={styles.flexRed}>
+            <Image style={styles.yjImage} source={YJ} resizeMode={'contain'}/>
+            <View style={styles.flexTop}>
                 {/* 출결 현황 */}
                 <Text style={styles.textContents}>{userData.name}</Text>
-                <Text>입실 시간 : {userData.in_time}</Text>
-                <Text>퇴실 시간 : {userData.out_time}</Text>
+                <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
+                <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
             </View>
-            <View style={styles.flexBlue}>
+            <View style={styles.flexBottom}>
                 <Biometric width={width} text='입 실'
                     ReactNativeBiometrics={ReactNativeBiometrics}/>
                 <Biometric width={width} text='퇴 실'
@@ -96,25 +98,25 @@ export default Main
 
 
 const styles = StyleSheet.create({
-    flexText: {
+    Title: {
         display: 'flex',
         marginTop: getStatusBarHeight()+height*0.01,
         marginLeft: width*0.05,
         fontSize: width*0.06,
         fontWeight: 'bold',
     },
-    flexRed: {
+    flexTop: {
         display: 'flex',
-        flex: 7,
+        flex: 5,
         margin: width*0.05,
         marginBottom: 0,
         borderRadius: 15,
         backgroundColor: 'rgb(225,224,255)',
     },
-    flexBlue: {
+    flexBottom: {
         display: 'flex',
         flexDirection: 'row',
-        flex: 3,
+        flex: 2,
         margin: width*0.05,
         borderRadius: 15,
         backgroundColor: 'rgb(188,224,255)',
@@ -131,7 +133,17 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     textContents: {
-        margin: 20,
-        fontSize: 22,
+        margin: 30,
+        fontSize: 24,
+    },
+    userText: {
+        marginLeft: 30,
+        marginBottom: 10,
+        fontSize: 16,
+    },
+    yjImage: {
+        width: width*0.9,
+        height: height*0.45,
+        alignSelf: 'center',
     }
 });
