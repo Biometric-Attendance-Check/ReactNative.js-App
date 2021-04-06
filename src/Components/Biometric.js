@@ -37,7 +37,6 @@ const InOut = (props) => {
             // 지문인식 완료 후 서버에서 데이터 불러오기
 
             Alert.alert(JSON.stringify(success))
-            props.setTempText(JSON.stringify(signature))
         })
     }
 

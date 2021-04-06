@@ -10,7 +10,7 @@ const { width, height } = Dimensions.get("window");
 
 const Main = (props) => {
     const [isReady, setIsReady] = useState(false)
-    const [tempText, setTempText] = useState('none')
+    const [userData, setUserData] = useState()
 
     // const deleteKey = () => {
     //     ReactNativeBiometrics.deleteKeys().then((resultObject) => {
@@ -59,6 +59,10 @@ const Main = (props) => {
                 })
             } 
         })
+
+        console.log(props.data)
+
+        setUserData(props.data)
     }, [])
 
 
@@ -69,12 +73,14 @@ const Main = (props) => {
             ? <>
             <View style={styles.flexRed}>
                 {/* 출결 현황 */}
-                <Text style={styles.textContents}>{tempText}</Text>
+                <Text style={styles.textContents}>{userData.name}</Text>
+                <Text>입실 시간 : {userData.in_time}</Text>
+                <Text>퇴실 시간 : {userData.out_time}</Text>
             </View>
             <View style={styles.flexBlue}>
-                <Biometric width={width} text='입 실' setTempText={setTempText}
+                <Biometric width={width} text='입 실'
                     ReactNativeBiometrics={ReactNativeBiometrics}/>
-                <Biometric width={width} text='퇴 실' setTempText={setTempText}
+                <Biometric width={width} text='퇴 실'
                     ReactNativeBiometrics={ReactNativeBiometrics}/>
             </View>
             </>
