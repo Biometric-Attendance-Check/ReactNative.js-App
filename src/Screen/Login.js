@@ -1,27 +1,41 @@
-import React from 'react'
-import { StyleSheet, View, Text, Dimensions, TextInput, TouchableOpacity } from 'react-native'
-
+import React, {useState} from 'react'
+import { StyleSheet, View, Text, Dimensions, TextInput, TouchableOpacity, Image } from 'react-native'
 import axios from 'axios'
+
+import Character from '../assets/character.jpeg'
 
 const { width, height } = Dimensions.get("window");
 
 const Login = (props) => {
 
+    const [auto, setAuto] = useState(false)
+
+    const autoLogin = async () => {
+        // 기기 정보를 보냈을 때 정보가 일치하면 그 아이디로 로그인
+
+        setAuto(true)
+    }
+
     const fetchLogin = async () => {
         await axios.post(`http://13.209.70.126/app/login_check_app.php`, {
-            'userID':'28', 'userDevice':props.uniqueId
+            'userID':'40', 'userDevice':props.uniqueId
         })
         .then((res) => {
             props.setData(res.data)
             props.setBool(true)
         })
+        setAuto(true)
     }
 
     return (
         <View style={styles.flexWhite}>
+            <Image source={Character} />
             <View style={styles.login}>
-                <TextInput style={styles.input}></TextInput>
-                <TouchableOpacity onPress={fetchLogin}><Text>Login</Text></TouchableOpacity>
+            {/* <Text style={styles.loginText}>3WDJ 출석</Text> */}
+                <TextInput style={styles.input} />
+                <TouchableOpacity onPress={fetchLogin}>
+                    <Text style={styles.loginText}>Login</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -51,8 +65,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         width: width*0.7,
         height: height*0.06,
-        borderBottomWidth: 1,
-        borderRadius: width,
-        margin: height*0.01,
+        borderBottomWidth: 2,
+        margin: height*0.02,
+    },
+    loginText: {
+        fontSize: 20,
+        fontWeight: 'bold',
     }
 })

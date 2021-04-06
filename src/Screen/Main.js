@@ -80,9 +80,7 @@ const Main = (props) => {
                 <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
             </View>
             <View style={styles.flexBottom}>
-                <Biometric width={width} text='입 실'
-                    ReactNativeBiometrics={ReactNativeBiometrics}/>
-                <Biometric width={width} text='퇴 실'
+                <Biometric width={width} text='출석 체크'
                     ReactNativeBiometrics={ReactNativeBiometrics}/>
             </View>
             </>
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
     },
     flexTop: {
         display: 'flex',
-        flex: 5,
+        flex: 3,
         margin: width*0.05,
         marginBottom: 0,
         borderRadius: 15,
@@ -116,7 +114,7 @@ const styles = StyleSheet.create({
     flexBottom: {
         display: 'flex',
         flexDirection: 'row',
-        flex: 2,
+        flex: 3,
         margin: width*0.05,
         borderRadius: 15,
         backgroundColor: 'rgb(188,224,255)',
@@ -125,6 +123,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         backgroundColor: 'white',
         flex: 1,
+        padding: 10,
+        paddingBottom: 20,
     },
     textTitle: {
         display: 'flex',
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     yjImage: {
-        width: width*0.9,
-        height: height*0.45,
+        width: width*0.8,
+        height: height*0.3,
         alignSelf: 'center',
     }
 });

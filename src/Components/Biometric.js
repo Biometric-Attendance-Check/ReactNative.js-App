@@ -7,9 +7,8 @@ const InOut = (props) => {
         flexGrey: {
             display: 'flex',
             flex: 1,
-            margin: props.width*0.03,
+            margin: props.width*0.05,
             borderRadius: 10,
-            backgroundColor: 'rgb(246,247,252)',
         },
         bioTouch: {
             display: 'flex',
@@ -19,7 +18,7 @@ const InOut = (props) => {
         },
         bioText: {
             fontSize: 24,
-            fontWeight: 'bold',
+            
         },
     })
 
