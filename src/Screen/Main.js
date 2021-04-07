@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Text, Dimensions, Image } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, Image, Alert } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"; 
 import ReactNativeBiometrics from 'react-native-biometrics'
 
@@ -64,6 +64,7 @@ const Main = (props) => {
         console.log(props.data)
 
         setUserData(props.data)
+        props.setLoading(false)
     }, [])
 
 
@@ -75,13 +76,14 @@ const Main = (props) => {
             <Image style={styles.yjImage} source={YJ} resizeMode={'contain'}/>
             <View style={styles.flexTop}>
                 {/* 출결 현황 */}
-                <Text style={styles.textContents}>{userData.name}</Text>
+                <Text style={styles.textContents}>{userData.std_name}</Text>
                 <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
                 <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
             </View>
             <View style={styles.flexBottom}>
                 <Biometric width={width} text='출석 체크'
                     ReactNativeBiometrics={ReactNativeBiometrics}/>
+                    {Alert.alert(props.uid)}
             </View>
             </>
             : <ErrorScreen width={width}/>}

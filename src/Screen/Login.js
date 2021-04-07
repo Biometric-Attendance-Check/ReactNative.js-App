@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { StyleSheet, View, Text, Dimensions, TextInput, TouchableOpacity, Image } from 'react-native'
+import React, {useState, useEffect} from 'react'
+import { StyleSheet, View, Text, Dimensions, TextInput, TouchableOpacity, Image, Alert } from 'react-native'
 import axios from 'axios'
 
 import Character from '../assets/character.jpeg'
@@ -8,31 +8,48 @@ const { width, height } = Dimensions.get("window");
 
 const Login = (props) => {
 
-    const [auto, setAuto] = useState(false)
+    const [idText, setIdText] = useState()
 
+    // 기기 고유 값을 서버에 보내서 DB 와 비교 후 로그인 가능 여부
     const autoLogin = async () => {
         // 기기 정보를 보냈을 때 정보가 일치하면 그 아이디로 로그인
-
-        setAuto(true)
+        await axios.post(`http://13.209.70.126/app/fast_login_check_app.php`, {
+            "userDevice":props.uniqueId
+        })
+        .then((res) => {
+            if(res.data.flag_mobile){
+                // 자동 로그인 시
+                props.setData(res.data)
+                props.setBool(true)
+            } else{
+                // 자동 로그인 불가 시
+                props.setBool(false)
+            }
+        })
     }
 
     const fetchLogin = async () => {
         await axios.post(`http://13.209.70.126/app/login_check_app.php`, {
-            'userID':'40', 'userDevice':props.uniqueId
+            'userID':'28', 'userDevice':props.uniqueId
         })
         .then((res) => {
-            props.setData(res.data)
-            props.setBool(true)
+            /////////////////////////////////아래의 true 시연이 코드 오면 고쳐야함 ///
+            if(true){
+                // 아이디 기기정보 일치
+                props.setData(res.data)
+                props.setBool(true)
+            } else{
+                // 아이디 기기정보 불일치
+                Alert.alert('회원님의 아이디와 기기정보가 일치하지 않습니다.')
+            }
         })
-        setAuto(true)
     }
 
     return (
         <View style={styles.flexWhite}>
             <Image source={Character} />
             <View style={styles.login}>
-            {/* <Text style={styles.loginText}>3WDJ 출석</Text> */}
-                <TextInput style={styles.input} />
+                <TextInput style={styles.input} onChangeText={(text) => {setIdText(text)}}/>
                 <TouchableOpacity onPress={fetchLogin}>
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
@@ -51,6 +68,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 10,
     },
     login: {
         display: 'flex',
