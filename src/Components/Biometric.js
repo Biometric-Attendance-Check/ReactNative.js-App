@@ -28,14 +28,18 @@ const InOut = (props) => {
     const prompt = () => {
         let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
         let payload = epochTimeSeconds + 'some message'
+
         props.ReactNativeBiometrics.createSignature({
             promptMessage: 'Sign in',
             payload: payload
         }).then((resultObject) => {
             const { success, signature, error } = resultObject
             // 지문인식 완료 후 서버에서 데이터 불러오기
-            InOut()
-            Alert.alert(JSON.stringify(success))
+            if(props.text !== '외 출' && props.userData.out_time == null){
+                InOut()
+                // Alert.alert(JSON.stringify(success))
+                Alert.alert('출석체크 완료')
+            }
         })
     }
 

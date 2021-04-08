@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Text, Dimensions, Image, Alert, PermissionsAndroid, ScrollView } from 'react-native'
-import { getStatusBarHeight } from "react-native-status-bar-height"; 
+import { StyleSheet, View, Text, Dimensions, Image, Platform, PermissionsAndroid, ScrollView, Alert } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height"
 import ReactNativeBiometrics from 'react-native-biometrics'
+import WifiManager from "react-native-wifi-reborn"
+
 
 import Biometric from '../Components/Biometric'
 import ErrorScreen from '../Components/ErrorScreen'
@@ -14,12 +16,53 @@ const Main = (props) => {
     const [userData, setUserData] = useState()
 
     const wifi = () => {
-
+        WifiManager.connectToProtectedSSID('YJU-BON200-5G', 'bon200!@#', false).then(
+            () => {
+                console.log("Connected successfully!");
+            },
+            (err) => {
+                console.log("Connection failed!");
+                console.log('err',err)
+            }
+        );
+        WifiManager.getCurrentWifiSSID().then(
+            (ssid) => {
+                Alert.alert("ssid : ", ssid)
+                console.log(ssid)
+            },
+            (err) => {
+                console.log("Cannot get current SSID!")
+                console.log(err)
+            }
+        )
+        console.log(WifiManager)
     }
 
     useEffect(() => {
         // 휴대폰 가로 세로 길이
         console.log(width, height)
+        wifi()
+        if(Platform.OS === 'ios'){
+
+        } else {
+            const granted = PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: 'Location permission is required for WiFi connections',
+                    message:
+                    'This app needs location permission as this is required  ' +
+                    'to scan for wifi networks.',
+                    buttonNegative: 'DENY',
+                    buttonPositive: 'ALLOW',
+                },
+            );
+            // if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            //     // You can now use react-native-wifi-reborn
+            // } else {
+            //     // Permission denied
+            // }
+            console.log(granted)
+        }
 
         // 생체인식 기능 활성화 체크
         ReactNativeBiometrics.isSensorAvailable().then((resultObject) => {
@@ -72,15 +115,12 @@ const Main = (props) => {
                 <Text style={styles.textContents}>{userData.std_name}</Text>
                 <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
                 <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
-                <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
-                <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
 
-                <Text style={styles.userText}>외출 시간 : {userData.out_time}</Text>
-                <Text style={styles.userText}>외출 시간 : {userData.out_time}</Text>
+                <Text style={styles.userText}>외출 시간 : {}</Text>
             </ScrollView>
             
             <View style={styles.flexBottom}>
-                <Biometric width={width} text='출석 체크' setUserData={setUserData}
+                <Biometric width={width} text='출석 체크' setUserData={setUserData} userData={userData}
                     ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
                     {/* {Alert.alert(props.uid)} */}
             </View>
