@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native'
+import axios from 'axios'
 
 const InOut = (props) => {
 
@@ -32,10 +33,19 @@ const InOut = (props) => {
             payload: payload
         }).then((resultObject) => {
             const { success, signature, error } = resultObject
-
             // 지문인식 완료 후 서버에서 데이터 불러오기
-
+            InOut()
             Alert.alert(JSON.stringify(success))
+        })
+    }
+
+
+    const InOut = async () => {
+        // 기기 정보를 보냈을 때 정보가 일치하면 그 아이디로 로그인
+        await axios.post(`http://13.209.70.126/app/fingerPrint_app.php`, {
+            "userDevice":props.uid
+        }).then((res) => {
+            props.setUserData(res.data)
         })
     }
 

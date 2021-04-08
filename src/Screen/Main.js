@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Text, Dimensions, Image, Alert } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, Image, Alert, PermissionsAndroid, ScrollView } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"; 
 import ReactNativeBiometrics from 'react-native-biometrics'
 
@@ -13,16 +13,9 @@ const Main = (props) => {
     const [isReady, setIsReady] = useState(false)
     const [userData, setUserData] = useState()
 
-    // const deleteKey = () => {
-    //     ReactNativeBiometrics.deleteKeys().then((resultObject) => {
-    //         const { keysDeleted } = resultObject
-    //         if (keysDeleted) {
-    //             console.log('Successful deletion')
-    //         } else {
-    //             console.log('Unsuccessful deletion because there were no keys to delete')
-    //         }
-    //     })
-    // }
+    const wifi = () => {
+
+    }
 
     useEffect(() => {
         // 휴대폰 가로 세로 길이
@@ -61,7 +54,7 @@ const Main = (props) => {
             } 
         })
 
-        console.log(props.data)
+        // console.log(props.data)
 
         setUserData(props.data)
         props.setLoading(false)
@@ -74,17 +67,28 @@ const Main = (props) => {
             {isReady
             ? <>
             <Image style={styles.yjImage} source={YJ} resizeMode={'contain'}/>
-            <View style={styles.flexTop}>
+            <ScrollView style={styles.flexTop}>
                 {/* 출결 현황 */}
                 <Text style={styles.textContents}>{userData.std_name}</Text>
                 <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
                 <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
+                <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
+                <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
+
+                <Text style={styles.userText}>외출 시간 : {userData.out_time}</Text>
+                <Text style={styles.userText}>외출 시간 : {userData.out_time}</Text>
+            </ScrollView>
+            
+            <View style={styles.flexBottom}>
+                <Biometric width={width} text='출석 체크' setUserData={setUserData}
+                    ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
+                    {/* {Alert.alert(props.uid)} */}
             </View>
             <View style={styles.flexBottom}>
-                <Biometric width={width} text='출석 체크'
-                    ReactNativeBiometrics={ReactNativeBiometrics}/>
-                    {Alert.alert(props.uid)}
+                <Biometric width={width} text='외 출' setUserData={setUserData}
+                    ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
             </View>
+
             </>
             : <ErrorScreen width={width}/>}
             
@@ -108,16 +112,16 @@ const styles = StyleSheet.create({
     flexTop: {
         display: 'flex',
         flex: 3,
+        flexGrow: 3,
         margin: width*0.05,
-        marginBottom: 0,
         borderRadius: 15,
         backgroundColor: 'rgb(225,224,255)',
     },
     flexBottom: {
         display: 'flex',
-        flexDirection: 'row',
-        flex: 3,
-        margin: width*0.05,
+        flex: 1,
+        marginBottom: width*0.05,
+        marginHorizontal: width*0.05,
         borderRadius: 15,
         backgroundColor: 'rgb(188,224,255)',
     },

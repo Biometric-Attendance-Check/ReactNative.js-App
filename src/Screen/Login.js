@@ -30,11 +30,11 @@ const Login = (props) => {
 
     const fetchLogin = async () => {
         await axios.post(`http://13.209.70.126/app/login_check_app.php`, {
-            'userID':'28', 'userDevice':props.uniqueId
+            'userID':idText, 'userDevice':props.uniqueId
         })
         .then((res) => {
-            /////////////////////////////////아래의 true 시연이 코드 오면 고쳐야함 ///
-            if(true){
+            //
+            if(res.data.std_name){
                 // 아이디 기기정보 일치
                 props.setData(res.data)
                 props.setBool(true)
