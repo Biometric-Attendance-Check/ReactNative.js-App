@@ -116,11 +116,15 @@ const Main = (props) => {
                 <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
                 <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
 
-                <Text style={styles.userText}>외출 시간 : {}</Text>
+                <Text style={styles.userText}>총 외출 시간 : {userData.outgoing_time}</Text>
+                <Text style={styles.userText}>외출</Text>
+                {/* map 돌려서 시간 나열 */}
+                {}
+
             </ScrollView>
             
             <View style={styles.flexBottom}>
-                <Biometric width={width} text='출석 체크' setUserData={setUserData} userData={userData}
+                <Biometric width={width} text={props.school} setUserData={setUserData} userData={userData}
                     ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
                     {/* {Alert.alert(props.uid)} */}
             </View>

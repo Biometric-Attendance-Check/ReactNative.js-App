@@ -15,6 +15,7 @@ const Root = () => {
     const [uniqueId, setUniqueId] = useState()
     const [data, setData] = useState()
     const [loading, setLoading] = useState(true)
+    const [school, setSchool] = useState()
 
     // 기기 고유 값을 서버에 보내서 DB 와 비교 후 로그인 가능 여부
     const autoLogin = async () => {
@@ -26,6 +27,15 @@ const Root = () => {
             if(res.data.flag_mobile){
                 // 자동 로그인 시
                 setData(res.data)
+
+                // 하교 한 이후
+                res.data.out_time != null
+                ? setSchool('stop')
+                // 등교인지 하교인지
+                : res.data.in_time == null
+                ? setSchool('등교')
+                : setSchool('하교')
+
                 setBool(true)
             } else{
                 // 자동 로그인 불가 시
@@ -54,8 +64,8 @@ const Root = () => {
         {loading
         ?<Image style={styles.imageLoading} source={Loading} resizeMode={'contain'}/>
         :bool
-        ? <Main data={data} setLoading={setLoading} uid={uniqueId}/>
-        : <Login bool={bool} setBool={setBool} uniqueId={uniqueId} setData={setData}/>
+        ? <Main data={data} setLoading={setLoading} uid={uniqueId} school={school} setSchool={setSchool}/>
+        : <Login bool={bool} setBool={setBool} uniqueId={uniqueId} setData={setData} setSchool={setSchool}/>
         }
         </>
     )
