@@ -39,8 +39,6 @@ const Main = (props) => {
     }
 
     useEffect(() => {
-        // 휴대폰 가로 세로 길이
-        console.log(width, height)
         wifi()
         if(Platform.OS === 'ios'){
 
@@ -125,11 +123,11 @@ const Main = (props) => {
             
             <View style={styles.flexBottom}>
                 <Biometric width={width} text={props.school} setUserData={setUserData} userData={userData}
-                    ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
+                    ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid} setSchool={props.setSchool}/>
                     {/* {Alert.alert(props.uid)} */}
             </View>
             <View style={styles.flexBottom}>
-                <Biometric width={width} text='외 출' setUserData={setUserData}
+                <Biometric width={width} text='외 출' setUserData={setUserData} subText={props.school}
                     ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
             </View>
 

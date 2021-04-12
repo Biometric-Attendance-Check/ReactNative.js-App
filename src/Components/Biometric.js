@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native'
 import axios from 'axios'
 
@@ -23,9 +23,13 @@ const InOut = (props) => {
         },
     })
 
+    const [text, setText] = useState(props.text)
     const [isAttendance, setIsAttendace] = useState()
-    const [status, setStatus] = useState()
     const [reason, setReason] = useState()
+
+    useEffect(() => {
+        props.subText === '-' ? setText('-') : {}
+    }, [])
 
     const prompt = () => {
         let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
@@ -35,18 +39,17 @@ const InOut = (props) => {
             promptMessage: 'Sign in',
             payload: payload
         }).then((resultObject) => {
-            const { success, signature, error } = resultObject
-            // 지문인식 완료 후 서버에서 데이터 불러오기
-            // if(props.text !== '외 출' && props.userData.out_time == null){
-            //     InOut()
-            //     // Alert.alert(JSON.stringify(success))
-            //     Alert.alert('출석체크 완료')
-            // }
-
-            props.text === '등교' || props.text === '하교'
-            ? (setIsAttendace(true) && InOut())
-            : (setIsAttendace(false) && console.log())
+            // const { success, signature, error } = resultObject
             
+            if(text === '등교' || text === '하교'){
+                InOut()
+            } else if(text === '외출'){
+                setIsAttendace(false)
+                
+                // 외출
+            } else {
+                console.log('-')
+            }
         })
     }
 
@@ -55,18 +58,27 @@ const InOut = (props) => {
         // 기기 정보를 보냈을 때 정보가 일치하면 그 아이디로 로그인
         await axios.post(`http://13.209.70.126/app/fingerPrint_app.php`, {
             "userDevice":props.uid,
-            "isAttendance":isAttendance,
-            "status":status,
-            "reason":reason,
         }).then((res) => {
             props.setUserData(res.data)
+
+            text === '등교'
+            ? Alert.alert('등교했습니다.')
+            : Alert.alert('집에 갑시다!')
+
+            // 하교 한 이후
+            res.data.out_time != null
+            ? props.setSchool('-')
+            // 등교인지 하교인지
+            : res.data.in_time == null
+            ? props.setSchool('등교')
+            : props.setSchool('하교')
         })
     }
 
     return (
         <View style={styles.flexGrey}>
             <TouchableOpacity style={styles.bioTouch} onPress={prompt}>
-                <Text style={styles.bioText}>{props.text}</Text>
+                <Text style={styles.bioText}>{text}</Text>
             </TouchableOpacity>
         </View>
     )

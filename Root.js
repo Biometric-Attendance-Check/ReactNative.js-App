@@ -30,7 +30,7 @@ const Root = () => {
 
                 // 하교 한 이후
                 res.data.out_time != null
-                ? setSchool('stop')
+                ? setSchool('-')
                 // 등교인지 하교인지
                 : res.data.in_time == null
                 ? setSchool('등교')
