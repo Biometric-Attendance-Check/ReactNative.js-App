@@ -13,7 +13,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		623867E5E57A3EC79B579C62 /* libPods-Attendance-AttendanceTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 126E0570EAB3CD14F4C8672C /* libPods-Attendance-AttendanceTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		9C9C173C261ED29E002D2887 /* react-native-wifi-reborn in Resources */ = {isa = PBXBuildFile; fileRef = 9C9C173B261ED29E002D2887 /* react-native-wifi-reborn */; };
 		AF952059C647885956C31E72 /* libPods-Attendance.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E87CAF26A405F2723EC9EEE9 /* libPods-Attendance.a */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +40,6 @@
 		5804472001F2B1B0D031B4CF /* Pods-Attendance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Attendance.debug.xcconfig"; path = "Target Support Files/Pods-Attendance/Pods-Attendance.debug.xcconfig"; sourceTree = "<group>"; };
 		73FED6427DFDE59803CD5EF1 /* Pods-Attendance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Attendance.release.xcconfig"; path = "Target Support Files/Pods-Attendance/Pods-Attendance.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Attendance/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9C9C173B261ED29E002D2887 /* react-native-wifi-reborn */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "react-native-wifi-reborn"; path = "../node_modules/react-native-wifi-reborn"; sourceTree = "<group>"; };
 		CD855704173694A1914C8BA9 /* Pods-Attendance-AttendanceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Attendance-AttendanceTests.release.xcconfig"; path = "Target Support Files/Pods-Attendance-AttendanceTests/Pods-Attendance-AttendanceTests.release.xcconfig"; sourceTree = "<group>"; };
 		E6DE3A44DDF2D8B9015DE388 /* Pods-Attendance-AttendanceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Attendance-AttendanceTests.debug.xcconfig"; path = "Target Support Files/Pods-Attendance-AttendanceTests/Pods-Attendance-AttendanceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E87CAF26A405F2723EC9EEE9 /* libPods-Attendance.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Attendance.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,7 +109,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				9C9C173B261ED29E002D2887 /* react-native-wifi-reborn */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -246,7 +243,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				9C9C173C261ED29E002D2887 /* react-native-wifi-reborn in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

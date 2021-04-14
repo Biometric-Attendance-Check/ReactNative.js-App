@@ -1,5 +1,9 @@
 rootProject.name = 'Attendance'
 include ':react-native-wifi-reborn'
 project(':react-native-wifi-reborn').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-wifi-reborn/android')
+include ':react-native-wifi-reborn'
+project(':react-native-wifi-reborn').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-wifi-reborn/android')
+include ':react-native-wifi-reborn'
+project(':react-native-wifi-reborn').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-wifi-reborn/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

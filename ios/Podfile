@@ -12,8 +12,6 @@ target 'Attendance' do
     :hermes_enabled => false
   )
 
-  pod 'RNWifi', :path => '../node_modules/react-native-wifi-reborn'
-
   target 'AttendanceTests' do
     inherit! :complete
     # Pods for testing

@@ -318,9 +318,7 @@ PODS:
     - React-cxxreact (= 0.64.0)
     - React-jsi (= 0.64.0)
     - React-perflogger (= 0.64.0)
-  - RNDeviceInfo (8.0.8):
-    - React-Core
-  - RNWifi (4.3.7):
+  - RNDeviceInfo (8.1.0):
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -377,7 +375,6 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
-  - RNWifi (from `../node_modules/react-native-wifi-reborn`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -454,8 +451,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
-  RNWifi:
-    :path: "../node_modules/react-native-wifi-reborn"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -499,8 +494,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 0fd6b21751a33cb72fce1a4a33ab9678416d307a
   React-runtimeexecutor: cad74a1eaa53ee6e7a3620231939d8fe2c6afcf0
   ReactCommon: cfe2b7fd20e0dbd2d1185cd7d8f99633fbc5ff05
-  RNDeviceInfo: 41a8c8a41ae0e70d85cbe652cd5318150cb2cc40
-  RNWifi: b09e4381b82ab1e6a647a1f2c841c4aec02cb701
+  RNDeviceInfo: 677a08eaafcfac4e85d2d2aab68a3708ff261c04
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
