@@ -10,33 +10,6 @@ const Login = (props) => {
 
     const [idText, setIdText] = useState()
 
-    // // 기기 고유 값을 서버에 보내서 DB 와 비교 후 로그인 가능 여부
-    // const autoLogin = async () => {
-    //     // 기기 정보를 보냈을 때 정보가 일치하면 그 아이디로 로그인
-    //     await axios.post(`http://13.209.70.126/app/fast_login_check_app.php`, {
-    //         "userDevice":props.uniqueId
-    //     })
-    //     .then((res) => {
-    //         if(res.data.flag_mobile){
-    //             // 자동 로그인 시
-    //             props.setData(res.data)
-
-    //             // 하교 한 이후
-    //             res.data.out_time != null
-    //             ? props.setSchool('-')
-    //             // 등교인지 하교인지
-    //             : res.data.in_time == null
-    //             ? props.setSchool('등교')
-    //             : props.setSchool('하교')
-
-    //             props.setBool(true)
-    //         } else{
-    //             // 자동 로그인 불가 시
-    //             props.setBool(false)
-    //         }
-    //     })
-    // }
-
     const fetchLogin = async () => {
         await axios.post(`http://13.209.70.126/app/login_check_app.php`, {
             'userID':idText, 'userDevice':props.uniqueId
@@ -48,12 +21,12 @@ const Login = (props) => {
                 props.setData(res.data)
 
                 // 하교 한 이후
-                res.data.out_time != null
-                ? props.setSchool('-')
+                data.out_time != null
+                ? setSchool('-')
                 // 등교인지 하교인지
-                : res.data.in_time == null
-                ? props.setSchool('등교')
-                : props.setSchool('하교')
+                : data.in_time == null
+                ? setSchool('등교')
+                : setSchool('하교')
 
                 props.setBool(true)
             } else{

@@ -6,6 +6,7 @@ import Loading from './src/assets/loading.png'
 
 import axios from 'axios'
 import DeviceInfo from 'react-native-device-info'
+import { TestContextProvider } from './src/Utils/TestContextProvider'
 
 const { width, height } = Dimensions.get("window");
 
@@ -15,7 +16,7 @@ const Root = () => {
     const [uniqueId, setUniqueId] = useState()
     const [data, setData] = useState()
     const [loading, setLoading] = useState(true)
-    const [school, setSchool] = useState()
+    const [school, setSchool] = useState('등교')
 
     // 기기 고유 값을 서버에 보내서 DB 와 비교 후 로그인 가능 여부
     const autoLogin = async () => {
@@ -57,10 +58,8 @@ const Root = () => {
         // return () => {}
     }, [uniqueId])
 
-
-
     return (
-        <>
+        <TestContextProvider>
         <StatusBar barStyle="dark-content" />
         {loading
         ?<Image style={styles.imageLoading} source={Loading} resizeMode={'contain'}/>
@@ -68,7 +67,7 @@ const Root = () => {
         ? <Main data={data} setLoading={setLoading} uid={uniqueId} school={school} setSchool={setSchool}/>
         : <Login bool={bool} setBool={setBool} uniqueId={uniqueId} setData={setData} setSchool={setSchool}/>
         }
-        </>
+        </TestContextProvider>
     )
 }
 

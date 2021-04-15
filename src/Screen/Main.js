@@ -1,21 +1,28 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { StyleSheet, View, Text, Dimensions, Image, Platform, PermissionsAndroid, ScrollView, Alert } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"
 import ReactNativeBiometrics from 'react-native-biometrics'
 
-
 import Biometric from '../Components/Biometric'
 import ErrorScreen from '../Components/ErrorScreen'
 import YJ from '../assets/yeungjin.png'
+import TestContext from '../Utils/TestContextProvider'
 
 const { width, height } = Dimensions.get("window");
 
 const Main = (props) => {
+    const {statusText} = useContext(TestContext)
     const [isReady, setIsReady] = useState(false)
-    const [userData, setUserData] = useState()
+    const [userData, setUserData] = useState({
+        "flag_mobile": false,
+        "std_name": "",
+        "in_time": "",
+        "out_time": "",
+        "outgoing_time": "",
+        "out_list": [],
+    })
 
     useEffect(() => {
-        // wifi()
         if(Platform.OS === 'ios'){
             console.log('ios')
         } else {
@@ -59,6 +66,21 @@ const Main = (props) => {
         props.setLoading(false)
     }, [])
 
+    useEffect(() => {
+        console.log(userData)
+
+        userData != null && userData.in_time && props.setSchool('하교')
+    }, [userData.in_time])
+    
+    useEffect(() => {
+        userData != null && userData.out_time && props.setSchool('-')
+    }, [userData.out_time])
+    
+    // useEffect(() => {
+    //     userData != null && userData.in_time && props.setSchool('하교')
+    //     userData != null && userData.out_time && props.setSchool('-')
+    // }, [userData])
+
 
     return (
         <View style={styles.flexWhite}>
@@ -75,7 +97,8 @@ const Main = (props) => {
                 <Text style={styles.userText}>총 외출 시간 : {userData.outgoing_time}</Text>
                 <Text style={styles.userText}>외출</Text>
                 {/* map 돌려서 시간 나열 */}
-                {}
+                {userData.out_list && userData.out_list.map(v => 
+                <Text style={styles.userText}>{v.in_time} ~ {v.out_time}</Text>)}
 
             </ScrollView>
             

@@ -40,7 +40,7 @@ const InOut = (props) => {
             payload: payload
         }).then((resultObject) => {
             // const { success, signature, error } = resultObject
-            
+
             if(text === '등교' || text === '하교'){
                 InOut()
             } else if(text === '외출'){
@@ -64,14 +64,6 @@ const InOut = (props) => {
             text === '등교'
             ? Alert.alert('등교했습니다.')
             : Alert.alert('집에 갑시다!')
-
-            // 하교 한 이후
-            res.data.out_time != null
-            ? props.setSchool('-')
-            // 등교인지 하교인지
-            : res.data.in_time == null
-            ? props.setSchool('등교')
-            : props.setSchool('하교')
         })
     }
 
