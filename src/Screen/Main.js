@@ -80,8 +80,8 @@ const Main = (props) => {
                 {/* 출결 현황 */}
                 <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
                 <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
-
                 <Text style={styles.userText}>총 외출 시간 : {userData.outgoing_time}</Text>
+                <View style={styles.temp}></View>
                 <Text style={styles.userText}>외출</Text>
                 {/* map 돌려서 시간 나열 */}
                 {userData.out_list && userData.out_list.map((v, index) => 
@@ -167,5 +167,8 @@ const styles = StyleSheet.create({
         width: width*0.8,
         height: height*0.3,
         alignSelf: 'center',
+    },
+    temp:{
+        margin: 5,
     }
 });
