@@ -10,7 +10,7 @@ const { width, height } = Dimensions.get("window");
 const Login = (props) => {
 
     const [idText, setIdText] = useState()
-    const {setUserData, setIsLogin, setStatusText} = useContext(TestContext)
+    const {userData, setUserData, setIsLogin, setStatusText} = useContext(TestContext)
 
     const fetchLogin = async () => {
         await axios.post(`http://13.209.70.126/app/login_check_app.php`, {
@@ -23,10 +23,10 @@ const Login = (props) => {
                 setUserData(res.data)
 
                 // 하교 한 이후
-                data.out_time != null
+                userData.out_time != null
                 ? setStatusText('x')
                 // 등교인지 하교인지
-                : data.in_time == null
+                : userData.in_time == null
                 ? setStatusText('등교')
                 : setStatusText('하교')
 

@@ -7,12 +7,14 @@ import Biometric from '../Components/Biometric'
 import ErrorScreen from '../Components/ErrorScreen'
 import YJ from '../assets/yeungjin.png'
 import TestContext from '../Utils/TestContextProvider'
+import OutSide from '../Screen/OutSide'
 
 const { width, height } = Dimensions.get("window");
 
 const Main = (props) => {
     const {userData, setStatusText, setIsLoading} = useContext(TestContext)
     const [isReady, setIsReady] = useState(false)
+    const [outGoingPage, setOutGoingPage] = useState(false)
 
     useEffect(() => {
         if(Platform.OS === 'ios'){
@@ -58,38 +60,42 @@ const Main = (props) => {
     }, [])
     
     useEffect(() => {
-        userData != null && userData.in_time && setStatusText('하교')
-        userData != null && userData.out_time && setStatusText('x')
+        userData != null && userData.in_time != null && setStatusText('하교')
+        userData != null && userData.out_time != null && setStatusText('x')
     }, [userData])
 
     return (
         <View style={styles.flexWhite}>
-            <Text style={styles.Title}>3WDJ 지문인식</Text>
+            <View style={styles.header}>
+                <Text style={styles.Title}>3WDJ 지문인식</Text>
+                <Text style={styles.Title}>{userData.std_name}</Text>
+            </View>
             {isReady
-            ? <>
+            ? 
+            outGoingPage
+            ? <OutSide uid={props.uid} setOutGoingPage={setOutGoingPage}/>
+            :<>
             <Image style={styles.yjImage} source={YJ} resizeMode={'contain'}/>
             <ScrollView style={styles.flexTop}>
                 {/* 출결 현황 */}
-                <Text style={styles.textContents}>{userData.std_name}</Text>
                 <Text style={styles.userText}>입실 시간 : {userData.in_time}</Text>
                 <Text style={styles.userText}>퇴실 시간 : {userData.out_time}</Text>
 
                 <Text style={styles.userText}>총 외출 시간 : {userData.outgoing_time}</Text>
                 <Text style={styles.userText}>외출</Text>
                 {/* map 돌려서 시간 나열 */}
-                {userData.out_list && userData.out_list.map(v => 
-                <Text style={styles.userText}>{v.in_time} ~ {v.out_time}</Text>)}
+                {userData.out_list && userData.out_list.map((v, index) => 
+                <Text key={index} style={styles.userText}>{v.reason} : {v.in_time} ~ {v.out_time}</Text>)}
 
             </ScrollView>
             
             <View style={styles.flexBottom}>
                 <Biometric width={width} uid={props.uid}
                     ReactNativeBiometrics={ReactNativeBiometrics}/>
-                    {/* {Alert.alert(props.uid)} */}
             </View>
             <View style={styles.flexBottom}>
-                <Biometric width={width} text='외 출' uid={props.uid}
-                    ReactNativeBiometrics={ReactNativeBiometrics}/>
+                <Biometric width={width} text='외출' setOutGoingPage={setOutGoingPage}
+                    ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
             </View>
 
             </>
@@ -108,9 +114,14 @@ const styles = StyleSheet.create({
     Title: {
         display: 'flex',
         marginTop: getStatusBarHeight()+height*0.01,
-        marginLeft: width*0.05,
         fontSize: width*0.06,
         fontWeight: 'bold',
+    },
+    header:{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: width*0.05,
     },
     flexTop: {
         display: 'flex',
@@ -119,6 +130,7 @@ const styles = StyleSheet.create({
         margin: width*0.05,
         borderRadius: 15,
         backgroundColor: 'rgb(225,224,255)',
+        paddingTop: 15,
     },
     flexBottom: {
         display: 'flex',
@@ -143,6 +155,7 @@ const styles = StyleSheet.create({
     },
     textContents: {
         margin: 30,
+        marginBottom: 10,
         fontSize: 24,
     },
     userText: {

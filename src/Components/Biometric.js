@@ -1,9 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useContext} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native'
 import axios from 'axios'
 import TestContext from '../Utils/TestContextProvider'
-
-
 
 const Biometric = (props) => {
 
@@ -36,28 +34,44 @@ const Biometric = (props) => {
             promptMessage: 'Sign in',
             payload: payload
         }).then((resultObject) => {
-            // const { success, signature, error } = resultObject
-            InOut()
+            const { success, signature, error } = resultObject
+            if(success){
+                if(props.text == null && (statusText === '등교' || statusText === '하교')){
+                    InOut()
+                } else if(props.text == '외출' && statusText === '하교'){
+                    props.setOutGoingPage(true)
+                }
+            } else {
+                Alert.alert("생체인식 실패")
+            }
         })
     }
 
 
     const InOut = async () => {
-        // 기기 정보를 보냈을 때 정보가 일치하면 그 아이디로 로그인
-        await axios.post(`http://13.209.70.126/app/fingerPrint_app.php`, {
+        // 기기 정보를 보냈을 때 정보가 일치하면 출석체크
+        await axios.post(`http://13.209.70.126/app/fingerPrint_test.php`, {
             "userDevice":props.uid,
         }).then((res) => {
-            setUserData(res.data)
+            if(res.data.access == false){
+                Alert.alert("삐빅.. 와이파이가 다릅니다..\nYJU-BON200_5G에 연결해주세요.")
+            } else{
+                setUserData(res.data)
 
-            statusText === '등교'
-            ? Alert.alert('등교했습니다.')
-            : Alert.alert('집에 갑시다!')
+                statusText === '등교'
+                ? Alert.alert('등교했습니다.')
+                : Alert.alert('집에 갑시다!')
+            }
         })
+    }
+
+    const stop = () => {
+        Alert.alert('이미 귀가 하셨습니다.')
     }
 
     return (
         <View style={styles.flexGrey}>
-            <TouchableOpacity style={styles.bioTouch} onPress={prompt}>
+            <TouchableOpacity style={styles.bioTouch} onPress={(statusText != 'x') ? prompt : stop}>
                 <Text style={styles.bioText}>{props.text?props.text:statusText}</Text>
             </TouchableOpacity>
         </View>
