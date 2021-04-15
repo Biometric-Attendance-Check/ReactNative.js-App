@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import { StyleSheet, View, Text, Dimensions, TextInput, TouchableOpacity, Image, Alert } from 'react-native'
 import axios from 'axios'
 
 import Character from '../assets/character.jpeg'
+import TestContext from '../Utils/TestContextProvider';
 
 const { width, height } = Dimensions.get("window");
 
 const Login = (props) => {
 
     const [idText, setIdText] = useState()
+    const {setUserData, setIsLogin, setStatusText} = useContext(TestContext)
 
     const fetchLogin = async () => {
         await axios.post(`http://13.209.70.126/app/login_check_app.php`, {
@@ -18,17 +20,17 @@ const Login = (props) => {
             //
             if(res.data.std_name){
                 // 아이디 기기정보 일치
-                props.setData(res.data)
+                setUserData(res.data)
 
                 // 하교 한 이후
                 data.out_time != null
-                ? setSchool('-')
+                ? setStatusText('x')
                 // 등교인지 하교인지
                 : data.in_time == null
-                ? setSchool('등교')
-                : setSchool('하교')
+                ? setStatusText('등교')
+                : setStatusText('하교')
 
-                props.setBool(true)
+                setIsLogin(true)
             } else{
                 // 아이디 기기정보 불일치
                 Alert.alert('회원님의 아이디와 기기정보가 일치하지 않습니다.')

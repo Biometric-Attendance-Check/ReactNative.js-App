@@ -11,16 +11,8 @@ import TestContext from '../Utils/TestContextProvider'
 const { width, height } = Dimensions.get("window");
 
 const Main = (props) => {
-    const {statusText} = useContext(TestContext)
+    const {userData, setStatusText, setIsLoading} = useContext(TestContext)
     const [isReady, setIsReady] = useState(false)
-    const [userData, setUserData] = useState({
-        "flag_mobile": false,
-        "std_name": "",
-        "in_time": "",
-        "out_time": "",
-        "outgoing_time": "",
-        "out_list": [],
-    })
 
     useEffect(() => {
         if(Platform.OS === 'ios'){
@@ -62,25 +54,13 @@ const Main = (props) => {
             } 
         })
 
-        setUserData(props.data)
-        props.setLoading(false)
+        setIsLoading(false)
     }, [])
-
-    useEffect(() => {
-        console.log(userData)
-
-        userData != null && userData.in_time && props.setSchool('하교')
-    }, [userData.in_time])
     
     useEffect(() => {
-        userData != null && userData.out_time && props.setSchool('-')
-    }, [userData.out_time])
-    
-    // useEffect(() => {
-    //     userData != null && userData.in_time && props.setSchool('하교')
-    //     userData != null && userData.out_time && props.setSchool('-')
-    // }, [userData])
-
+        userData != null && userData.in_time && setStatusText('하교')
+        userData != null && userData.out_time && setStatusText('x')
+    }, [userData])
 
     return (
         <View style={styles.flexWhite}>
@@ -103,13 +83,13 @@ const Main = (props) => {
             </ScrollView>
             
             <View style={styles.flexBottom}>
-                <Biometric width={width} text={props.school} setUserData={setUserData} userData={userData}
-                    ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid} setSchool={props.setSchool}/>
+                <Biometric width={width} uid={props.uid}
+                    ReactNativeBiometrics={ReactNativeBiometrics}/>
                     {/* {Alert.alert(props.uid)} */}
             </View>
             <View style={styles.flexBottom}>
-                <Biometric width={width} text='외 출' setUserData={setUserData} subText={props.school}
-                    ReactNativeBiometrics={ReactNativeBiometrics} uid={props.uid}/>
+                <Biometric width={width} text='외 출' uid={props.uid}
+                    ReactNativeBiometrics={ReactNativeBiometrics}/>
             </View>
 
             </>

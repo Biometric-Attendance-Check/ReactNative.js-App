@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, StatusBar, Image, Dimensions } from 'react-native'
 import Main from './src/Screen/Main'
 import Login from './src/Screen/Login'
@@ -6,17 +6,15 @@ import Loading from './src/assets/loading.png'
 
 import axios from 'axios'
 import DeviceInfo from 'react-native-device-info'
-import { TestContextProvider } from './src/Utils/TestContextProvider'
+import TestContext from './src/Utils/TestContextProvider'
+
 
 const { width, height } = Dimensions.get("window");
 
 const Root = () => {
 
-    const [bool, setBool] = useState(false)
     const [uniqueId, setUniqueId] = useState()
-    const [data, setData] = useState()
-    const [loading, setLoading] = useState(true)
-    const [school, setSchool] = useState('등교')
+    const {setUserData, setStatusText, isLogin, setIsLogin, isLoading, setIsLoading} = useContext(TestContext)
 
     // 기기 고유 값을 서버에 보내서 DB 와 비교 후 로그인 가능 여부
     const autoLogin = async () => {
@@ -27,20 +25,20 @@ const Root = () => {
         .then((res) => {
             if(res.data.flag_mobile){
                 // 자동 로그인 시
-                setData(res.data)
+                setUserData(res.data)
 
                 // 하교 한 이후
                 res.data.out_time != null
-                ? setSchool('-')
+                ? setStatusText('x')
                 // 등교인지 하교인지
                 : res.data.in_time == null
-                ? setSchool('등교')
-                : setSchool('하교')
+                ? setStatusText('등교')
+                : setStatusText('하교')
 
-                setBool(true)
+                setIsLogin(true)
             } else{
                 // 자동 로그인 불가 시
-                setLoading(false)
+                setIsLoading(false)
             }
         })
     }
@@ -49,7 +47,6 @@ const Root = () => {
     // 존재하지 않으면 디바이스 값이랑 아이디랑 매칭 후 디비에 저장 후 로그인
     useEffect(() => {
         setUniqueId(DeviceInfo.getUniqueId())
-        // console.log(DeviceInfo.getUniqueId())
         return () => {}
     }, [])
 
@@ -59,15 +56,15 @@ const Root = () => {
     }, [uniqueId])
 
     return (
-        <TestContextProvider>
+        <>
         <StatusBar barStyle="dark-content" />
-        {loading
+        {isLoading
         ?<Image style={styles.imageLoading} source={Loading} resizeMode={'contain'}/>
-        :bool
-        ? <Main data={data} setLoading={setLoading} uid={uniqueId} school={school} setSchool={setSchool}/>
-        : <Login bool={bool} setBool={setBool} uniqueId={uniqueId} setData={setData} setSchool={setSchool}/>
+        :isLogin
+        ? <Main uid={uniqueId}/>
+        : <Login uniqueId={uniqueId}/>
         }
-        </TestContextProvider>
+        </>
     )
 }
 

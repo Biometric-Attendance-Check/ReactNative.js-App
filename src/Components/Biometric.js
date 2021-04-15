@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native'
 import axios from 'axios'
+import TestContext from '../Utils/TestContextProvider'
 
-const InOut = (props) => {
+
+
+const Biometric = (props) => {
 
     const styles = StyleSheet.create({
         flexGrey: {
@@ -23,13 +26,7 @@ const InOut = (props) => {
         },
     })
 
-    const [text, setText] = useState(props.text)
-    const [isAttendance, setIsAttendace] = useState()
-    const [reason, setReason] = useState()
-
-    useEffect(() => {
-        props.subText === '-' ? setText('-') : {}
-    }, [])
+    const {setUserData, statusText} = useContext(TestContext)
 
     const prompt = () => {
         let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
@@ -40,16 +37,7 @@ const InOut = (props) => {
             payload: payload
         }).then((resultObject) => {
             // const { success, signature, error } = resultObject
-
-            if(text === '등교' || text === '하교'){
-                InOut()
-            } else if(text === '외출'){
-                setIsAttendace(false)
-                
-                // 외출
-            } else {
-                console.log('-')
-            }
+            InOut()
         })
     }
 
@@ -59,9 +47,9 @@ const InOut = (props) => {
         await axios.post(`http://13.209.70.126/app/fingerPrint_app.php`, {
             "userDevice":props.uid,
         }).then((res) => {
-            props.setUserData(res.data)
+            setUserData(res.data)
 
-            text === '등교'
+            statusText === '등교'
             ? Alert.alert('등교했습니다.')
             : Alert.alert('집에 갑시다!')
         })
@@ -70,10 +58,10 @@ const InOut = (props) => {
     return (
         <View style={styles.flexGrey}>
             <TouchableOpacity style={styles.bioTouch} onPress={prompt}>
-                <Text style={styles.bioText}>{text}</Text>
+                <Text style={styles.bioText}>{props.text?props.text:statusText}</Text>
             </TouchableOpacity>
         </View>
     )
 }
 
-export default InOut
+export default Biometric
