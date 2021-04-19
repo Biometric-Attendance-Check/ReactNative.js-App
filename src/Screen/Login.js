@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react'
 import { StyleSheet, View, Text, Dimensions, TextInput, TouchableOpacity, Image, Alert } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height"
 import axios from 'axios'
 
 import Character from '../assets/character.jpeg'
@@ -40,12 +41,15 @@ const Login = (props) => {
 
     return (
         <View style={styles.flexWhite}>
+            <Text style={styles.Title}>WDJ 지문인식</Text>
+            <View style={styles.centerBox}>
             <Image source={Character} />
             <View style={styles.login}>
                 <TextInput style={styles.input} onChangeText={(text) => {setIdText(text)}}/>
                 <TouchableOpacity onPress={fetchLogin}>
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
+            </View>
             </View>
         </View>
     )
@@ -55,13 +59,25 @@ export default Login
 
 
 const styles = StyleSheet.create({
+    Title: {
+        display: 'flex',
+        marginTop: getStatusBarHeight()+height*0.01,
+        fontSize: width*0.06,
+        fontWeight: 'bold',
+        marginLeft: width*0.05,
+    },
     flexWhite: {
         display: 'flex',
         backgroundColor: 'white',
         flex: 1,
+        padding: 10,
+        marginBottom: height*0.05,
+    },
+    centerBox: {
+        display: 'flex',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
     },
     login: {
         display: 'flex',

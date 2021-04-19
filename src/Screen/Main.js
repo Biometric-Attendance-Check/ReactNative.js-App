@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { StyleSheet, View, Text, Dimensions, Image, Platform, PermissionsAndroid, ScrollView, Alert } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, Image, Platform, ScrollView } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"
 import ReactNativeBiometrics from 'react-native-biometrics'
 
@@ -15,6 +15,7 @@ const Main = (props) => {
     const {userData, setStatusText, setIsLoading} = useContext(TestContext)
     const [isReady, setIsReady] = useState(false)
     const [outGoingPage, setOutGoingPage] = useState(false)
+    const [isThisOut, setIsThisOut] = useState(false)
 
     useEffect(() => {
         if(Platform.OS === 'ios'){
@@ -67,13 +68,14 @@ const Main = (props) => {
     return (
         <View style={styles.flexWhite}>
             <View style={styles.header}>
-                <Text style={styles.Title}>3WDJ 지문인식</Text>
+                <Text style={styles.Title}>WDJ 지문인식</Text>
                 <Text style={styles.Title}>{userData.std_name}</Text>
             </View>
             {isReady
             ? 
             outGoingPage
-            ? <OutSide uid={props.uid} setOutGoingPage={setOutGoingPage}/>
+            ? <OutSide uid={props.uid} setOutGoingPage={setOutGoingPage} 
+                setIsThisOut={setIsThisOut} isThisOut={isThisOut}/>
             :<>
             <Image style={styles.yjImage} source={YJ} resizeMode={'contain'}/>
             <ScrollView style={styles.flexTop}>
@@ -117,6 +119,11 @@ const styles = StyleSheet.create({
         fontSize: width*0.06,
         fontWeight: 'bold',
     },
+    TitleAndroid:{
+        display: 'flex',
+        fontSize: width*0.06,
+        fontWeight: 'bold',
+    },
     header:{
         display: 'flex',
         flexDirection: 'row',
@@ -125,16 +132,16 @@ const styles = StyleSheet.create({
     },
     flexTop: {
         display: 'flex',
-        flex: 3,
-        flexGrow: 3,
+        flex: 7,
+        flexGrow: 7,
         margin: width*0.05,
         borderRadius: 15,
         backgroundColor: 'rgb(225,224,255)',
-        paddingTop: 15,
+        paddingTop: 25,
     },
     flexBottom: {
         display: 'flex',
-        flex: 1,
+        flex: 2,
         marginBottom: width*0.05,
         marginHorizontal: width*0.05,
         borderRadius: 15,

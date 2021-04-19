@@ -1,7 +1,9 @@
 import React, {useContext} from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions} from 'react-native'
 import axios from 'axios'
 import TestContext from '../Utils/TestContextProvider'
+
+const { width, height } = Dimensions.get("window");
 
 const Biometric = (props) => {
 
@@ -19,8 +21,7 @@ const Biometric = (props) => {
             alignItems: 'center',
         },
         bioText: {
-            fontSize: 24,
-            
+            fontSize: width*0.06,
         },
     })
 
@@ -54,7 +55,7 @@ const Biometric = (props) => {
             "userDevice":props.uid,
         }).then((res) => {
             if(res.data.access == false){
-                Alert.alert("삐빅.. 와이파이가 다릅니다..\nYJU-BON200_5G에 연결해주세요.")
+                Alert.alert("삐빅.. 와이파이가 다릅니다..\nYJU-BON***_5G에 연결해주세요.")
             } else{
                 setUserData(res.data)
 

@@ -14,14 +14,28 @@ const OutSide = (props) => {
             "userDevice":props.uid,
             "reason":reason,
         }).then((res) => {
-            setUserData(res.data)
+            if(res.data.access == false){
+                Alert.alert("삐빅.. 와이파이가 다릅니다..\nYJU-BON***_5G에 연결해주세요.")
+            }else {
+                setUserData(res.data)
+                if(res.data.out_list[res.data.out_list.length-1].in_time != null &&
+                    res.data.out_list[res.data.out_list.length-1].out_time == null){
+                        props.setIsThisOut(true)
+                } else{
+                    props.setIsThisOut(false)
+                }
+            }
         })
         props.setOutGoingPage(false)
     }
 
     return (
         <View style={styles.flexWhite}>
-            <TextInput style={styles.input} onChangeText={(text) => {setReason(text)}}/>
+            {
+                props.isThisOut
+                ? <></>
+                : <TextInput style={styles.input} onChangeText={(text) => {setReason(text)}}/>
+            }
             <TouchableOpacity style={styles.submit} onPress={submitReason}>
                 <Text style={styles.submitText}>제출</Text>
             </TouchableOpacity>
