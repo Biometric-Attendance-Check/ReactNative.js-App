@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
         height: height*0.06,
         borderBottomWidth: 3,
         margin: height*0.02,
+        color: 'black',
     },
     submitText: {
         fontSize: width*0.06,
