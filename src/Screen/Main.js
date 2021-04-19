@@ -75,7 +75,8 @@ const Main = (props) => {
             ? 
             outGoingPage
             ? <OutSide uid={props.uid} setOutGoingPage={setOutGoingPage} 
-                setIsThisOut={setIsThisOut} isThisOut={isThisOut}/>
+                setIsThisOut={setIsThisOut} isThisOut={isThisOut} 
+                setOutGoingPage={setOutGoingPage}/>
             :<>
             <Image style={styles.yjImage} source={YJ} resizeMode={'contain'}/>
             <ScrollView style={styles.flexTop}>

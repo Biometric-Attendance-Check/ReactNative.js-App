@@ -29,16 +29,24 @@ const OutSide = (props) => {
         props.setOutGoingPage(false)
     }
 
+    const returnButton = () => {
+        props.setOutGoingPage(false)
+    }
+
     return (
         <View style={styles.flexWhite}>
-            {
-                props.isThisOut
-                ? <></>
-                : <TextInput style={styles.input} onChangeText={(text) => {setReason(text)}}/>
-            }
-            <TouchableOpacity style={styles.submit} onPress={submitReason}>
-                <Text style={styles.submitText}>제출</Text>
-            </TouchableOpacity>
+            <View style={styles.submit}>
+                {props.isThisOut
+                    ? <></>
+                    : <TextInput style={styles.input} onChangeText={(text) => {setReason(text)}}/>
+                }
+                <TouchableOpacity style={styles.buttons} onPress={submitReason}>
+                    <Text style={styles.submitText}>제출</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={returnButton}>
+                    <Text style={styles.submitText}>돌아가기</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -66,11 +74,14 @@ const styles = StyleSheet.create({
         display: 'flex',
         width: width*0.7,
         height: height*0.06,
-        borderBottomWidth: 2,
+        borderBottomWidth: 3,
         margin: height*0.02,
     },
     submitText: {
-        fontSize: 20,
+        fontSize: width*0.06,
         fontWeight: 'bold',
+    },
+    buttons: {
+        margin: width*0.04,
     }
 })
