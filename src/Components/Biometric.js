@@ -8,12 +8,6 @@ const { width, height } = Dimensions.get("window");
 const Biometric = (props) => {
 
     const styles = StyleSheet.create({
-        flexGrey: {
-            display: 'flex',
-            flex: 1,
-            margin: props.width*0.05,
-            borderRadius: 10,
-        },
         bioTouch: {
             display: 'flex',
             flex: 1,
@@ -54,15 +48,11 @@ const Biometric = (props) => {
         await axios.post(`http://13.209.70.126/app/fingerPrint_test.php`, {
             "userDevice":props.uid,
         }).then((res) => {
-            // if(res.data.access == false){
-            //     // Alert.alert("삐빅.. 와이파이가 다릅니다..\nYJU-BON***_5G에 연결해주세요.")
-            // } else{
                 setUserData(res.data)
 
                 statusText === '등교'
                 ? Alert.alert('등교했습니다.')
                 : Alert.alert('집에 갑시다!')
-            // }
         })
     }
 
@@ -81,11 +71,9 @@ const Biometric = (props) => {
     }
 
     return (
-        <View style={styles.flexGrey}>
             <TouchableOpacity style={styles.bioTouch} onPress={(statusText != 'x') ? ipCheck : stop}>
                 <Text style={styles.bioText}>{props.text?props.text:statusText}</Text>
             </TouchableOpacity>
-        </View>
     )
 }
 
