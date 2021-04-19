@@ -47,7 +47,6 @@ const OutSide = (props) => {
 
     return (
         <View style={styles.flexWhite}>
-            <View style={styles.submit}>
             <View style={styles.outTypeBox}>
                 {reasonType.map((v,index) => 
                     <TouchableOpacity key={index} style={styles.box} onPress={() => clickReason(v.type)}>
@@ -56,17 +55,16 @@ const OutSide = (props) => {
                     </TouchableOpacity>
                 )}
             </View>
-                {props.isThisOut
-                    ? <></>
-                    : <TextInput style={styles.input} value={reason} onChangeText={(text) => {setReason(text)}}/>
-                }
-                <TouchableOpacity style={styles.buttons} onPress={submitReason}>
-                    <Text style={styles.submitText}>제출</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={returnButton}>
-                    <Text style={styles.submitText}>돌아가기</Text>
-                </TouchableOpacity>
-            </View>
+            {props.isThisOut
+                ? <></>
+                : <TextInput style={styles.input} value={reason} onChangeText={(text) => {setReason(text)}}/>
+            }
+            <TouchableOpacity style={styles.buttons} onPress={submitReason}>
+                <Text style={styles.submitText}>제출</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={returnButton}>
+                <Text style={styles.submitText}>돌아가기</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -76,19 +74,10 @@ export default OutSide
 const styles = StyleSheet.create({
     flexWhite: {
         display: 'flex',
-        backgroundColor: 'white',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-    },
-    submit: {
-        display: 'flex',
-        width: width*0.85,
-        height: height*0.3,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     input: {
         display: 'flex',
@@ -115,6 +104,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        height: width*0.82,
+        justifyContent: 'center',
     },
     box: {
         backgroundColor: 'rgb(188,224,255)',
