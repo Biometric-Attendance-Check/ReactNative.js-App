@@ -18,7 +18,6 @@ const Login = (props) => {
             'userID':idText, 'userDevice':props.uniqueId
         })
         .then((res) => {
-            //
             if(res.data.std_name){
                 // 아이디 기기정보 일치
                 setUserData(res.data)

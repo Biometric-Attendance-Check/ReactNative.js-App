@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo, useEffect } from 'react'
+import React, { createContext, useState, useMemo } from 'react'
 
 const TestContext = createContext(null);
 
@@ -13,7 +13,6 @@ const TestContextProvider = ({ children }) => {
         "out_list": [],
     })
     const [statusText, setStatusText] = useState('등교')
-    const [isLoading, setIsLoading] = useState(true)
     const [isLogin, setIsLogin] = useState(false)
 
     
@@ -28,8 +27,6 @@ const TestContextProvider = ({ children }) => {
         setStatusText: useMemo(() => setStatusText, [setStatusText]),
         isLogin: useMemo(() => isLogin, [isLogin]),
         setIsLogin: useMemo(() => setIsLogin, [setIsLogin]),
-        isLoading: useMemo(() => isLoading, [isLoading]),
-        setIsLoading: useMemo(() => setIsLoading, [setIsLoading]),
     }
     
     return (

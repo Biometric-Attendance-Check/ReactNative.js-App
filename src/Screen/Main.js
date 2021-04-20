@@ -12,7 +12,7 @@ import OutSide from '../Screen/OutSide'
 const { width, height } = Dimensions.get("window");
 
 const Main = (props) => {
-    const {userData, setStatusText, setIsLoading} = useContext(TestContext)
+    const {userData, setStatusText} = useContext(TestContext)
     const [isReady, setIsReady] = useState(false)
     const [outGoingPage, setOutGoingPage] = useState(false)
     const [isThisOut, setIsThisOut] = useState(false)
@@ -57,7 +57,6 @@ const Main = (props) => {
             } 
         })
 
-        setIsLoading(false)
     }, [])
     
     useEffect(() => {
