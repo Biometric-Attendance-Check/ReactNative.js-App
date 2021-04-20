@@ -18,22 +18,26 @@ const OutSide = (props) => {
                         {'type': '면접연습', 'image': interview}]
 
     const submitReason = async () => {
-        if(reason == null && props.isThisOut != true){
-            Alert.alert("외출하시는 목적을 입력해주세요.")
-        } else {
-        await axios.post(`http://13.209.70.126/app/outGoing_app.php`, {
-            "userDevice":props.uid,
-            "reason":reason,
-        }).then((res) => {
-                setUserData(res.data)
-                if(res.data.out_list[res.data.out_list.length-1].in_time != null &&
-                    res.data.out_list[res.data.out_list.length-1].out_time == null){
-                        props.setIsThisOut(true)
-                } else{
-                    props.setIsThisOut(false)
-                }
-        })
-        props.setOutGoingPage(false)
+        try {
+            if(reason == null && props.isThisOut != true){
+                Alert.alert("외출하시는 목적을 입력해주세요.")
+            } else {
+            await axios.post(`http://13.209.70.126/app/outGoing_app.php`, {
+                "userDevice":props.uid,
+                "reason":reason,
+            }).then((res) => {
+                    setUserData(res.data)
+                    if(res.data.out_list[res.data.out_list.length-1].in_time != null &&
+                        res.data.out_list[res.data.out_list.length-1].out_time == null){
+                            props.setIsThisOut(true)
+                    } else{
+                        props.setIsThisOut(false)
+                    }
+                    props.setOutGoingPage(false)
+                })
+            }
+        } catch(err){
+            Alert.alert("네트워크 문제로 실패했습니다.\n다시 시도해주세요.")
         }
     }
 
